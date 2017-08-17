@@ -18,6 +18,7 @@ Node* minimal_element(Node* root);
 
 int height(Node *root);
 int calculate_balance_factor(Node* root);
-void Preorder(Node* root);
+void preorder(Node* root);
+void print_debug(char* string, int value);
 
 #endif

@@ -8,12 +8,14 @@ int main(void){
 	int tmp;
 	while(scanf("%d", &tmp) != EOF)
 		root = insert(root, tmp);
-	Preorder(root);
+	preorder(root);
+	printf("\nDelete:");
 	scanf("%d", &tmp);
 
 
 	root = remove_element(root,tmp);
-	Preorder(root);
+	preorder(root);
+	printf("\n");
 
 	return 0;
 }

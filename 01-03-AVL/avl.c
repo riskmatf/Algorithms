@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "avl.h"
+#define DEBUG_print 1 //you can set this to 0 if you do not want any printing on screen
+
+
+void print_debug(char* string, int value){
+#ifdef DEBUG_print
+	printf(string, value);
+#endif
+}
 
 Node* make_node(int value){
 	Node* new_node = malloc(sizeof(Node));
@@ -36,27 +44,27 @@ Node* insert(Node* root, int value){
 
 	//left left
 	if(balance > 1 && value < root->left->value){
-		printf("\x1b[31mright rotate in %d\x1b[0m\n", root->value);
+		print_debug("\x1b[31mright rotate in %d\x1b[0m\n", root->value);
+//		printf("\x1b[31mright rotate in %d\x1b[0m\n", root->value);
 		return right_rotation(root);
 	}
 	//right right
 	if(balance < -1 && value > root->right->value){
-		printf("\x1b[34mleft rotate in %d\x1b[0m\n", root->value);
+		print_debug("\x1b[34mleft rotate in %d\x1b[0m\n", root->value);
 		return left_rotation(root);
 	}
 	//left right
 	if(balance > 1 && value > root->left->value){
-
-		printf("\x1b[34mleft rotate in %d\x1b[0m\n", root->value);
+		print_debug("\x1b[34mleft rotate in %d\x1b[0m\n", root->left->value);
 		root->left=left_rotation(root->left);
-		printf("\x1b[31mright rotate in %d\x1b[0m\n", root->value);
+		print_debug("\x1b[31mright rotate in %d\x1b[0m\n", root->value);
 		return right_rotation(root);
 	}
 	//right left
 	if(balance < -1 && value < root->right->value){
-		printf("\x1b[31mright rotate in %d\x1b[0m\n", root->value);
+		print_debug("\x1b[31mright rotate in %d\x1b[0m\n", root->right->value);
 		root->right=right_rotation(root->right);
-		printf("\x1b[34mleft rotate in %d\x1b[0m\n", root->value);
+		print_debug("\x1b[34mleft rotate in %d\x1b[0m\n", root->value);
 		return left_rotation(root);
 	}
 	return root;
@@ -120,28 +128,32 @@ Node* remove_element(Node* root, int value){
 	 STEP 2:
 	 We distinguish 4 cases
 	 */
-	//left left
-	if(balance > 1 && calculate_balance_factor(root->left) >= 0)
-		return right_rotation(root);
-	//right right
-	if(balance < -1 && calculate_balance_factor(root->right) <= 0)
-		return left_rotation(root);
-	//left right
-	if(balance > 1 && calculate_balance_factor(root->left) < 0){
-		root->left = left_rotation(root->left);
-		return right_rotation(root);
+	//left case
+	if(balance > 1){
+		int balance_left = calculate_balance_factor(root->left);
+		if(balance_left < 0){//left right case
+			print_debug("\x1b[34mleft rotate in %d\x1b[0m\n", root->left->value);
+			root->left = left_rotation(root->left);
+		}
+		print_debug("\x1b[31mright rotate in %d\x1b[m\n", root->value);
+		return right_rotation(root);//left left case
 	}
-	//right left
-	if(balance < -1 && calculate_balance_factor(root->right) > 0){
-		root->right = right_rotation(root->right);
-		return left_rotation(root);
+	//right case
+	if(balance < -1){
+		int balance_right = calculate_balance_factor(root->right);
+		if(balance_right > 0){//right left case
+			print_debug("\x1b[31mright rotate in %d\x1b[0m\n", root->right->value);
+			root->right = right_rotation(root->right);
+		}
+		print_debug("\x1b[34mleft rotate in %d\x1b[0m\n", root->value);
+		return left_rotation(root);//right right case
 	}
 	return root;
 }
 
 
 Node* minimal_element(Node* root){
-	while(root->left != NULL)
+	while(root != NULL && root->left != NULL)
 		root = root->left;
 	return root;
 }
@@ -158,11 +170,11 @@ int height(Node *root){
 	return 1 + ((l > d) ? l : d);
 }
 
-void Preorder(Node* root){
+void preorder(Node* root){
 	if(root == NULL)
 		return;
 	printf("%d ", root->value);
-	Preorder(root->left);
-	Preorder(root->right);
+	preorder(root->left);
+	preorder(root->right);
 }
 
