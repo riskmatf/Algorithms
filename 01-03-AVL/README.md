@@ -1,7 +1,7 @@
-##AVL STABLA
+## AVL STABLA
 
-**AVL stablo** je **samobalansirajucje** binarno stablo pretrage.
-Pored toga shto je ono samo balansirano, takodje je i svako njegovo podstablo balansirano.
+**AVL stablo** je **samobalansirajuće** binarno stablo pretrage.
+Pored toga što je ono samo balansirano, takođe je i svako njegovo podstablo balansirano.
 
 **Slozenost** svih operacija(pretraga, umetanje elementa, brisanje elementa) je O(log(n)).
 
@@ -14,14 +14,14 @@ Pored toga shto je ono samo balansirano, takodje je i svako njegovo podstablo ba
             T1  T2     Leva rotacija u x         T2  T3
 Gde su T1, T2, T3 podstabla
 
-**Kritichan chvor** je prvi chvor, pocevshi od dole, kod koga je razlika izmedju
-visine levog i desnog podstabla veca od 2.
+**Kritičan čvor** je prvi čvor, počevši od dole, kod koga je razlika između
+visine levog i desnog podstabla veća od 2.
 
-Razdvajamo 4 kritichne situacije:
+Razdvajamo 4 kritične situacije:
 
   * **levo-levo**
 
-z je kritichan chvor, a problem je nastao u **levom** podstablu **levog** potomka chvora z
+z je kritičan čvor, a problem je nastao u **levom** podstablu **levog** potomka čvora z
 
              z                                      y
             / \                                   /   \
@@ -34,7 +34,7 @@ z je kritichan chvor, a problem je nastao u **levom** podstablu **levog** potomk
 
   * **levo-desno**
 
-z je kritichan chvor, problem je nastao u **desnom** podstablu **levog** potomka chvora z
+z je kritičan čvor, problem je nastao u **desnom** podstablu **levog** potomka čvora z
 
          z                               z                           x
         / \                            /   \                        /  \ 
@@ -47,7 +47,7 @@ z je kritichan chvor, problem je nastao u **desnom** podstablu **levog** potomka
 
   * **desno-desno**
 
-z je kritichan chvor, a problem je nastao u **desnom** podstablu **desnog** potomka chvora z
+z je kritičan čvor, a problem je nastao u **desnom** podstablu **desnog** potomka čvora z
 
 
       z                                y
@@ -61,7 +61,7 @@ z je kritichan chvor, a problem je nastao u **desnom** podstablu **desnog** poto
 
   * **desno-levo**
 
-z je kritichan chvor, a problem je nastao u **levom** podstablu **desnog** potomka chvora z
+z je kritičan čvor, a problem je nastao u **levom** podstablu **desnog** potomka čvora z
 
        z                            z                            x
       / \                          / \                          /  \ 
@@ -70,12 +70,12 @@ z je kritichan chvor, a problem je nastao u **levom** podstablu **desnog** potom
        x   T4                      T2   y                  T1  T2  T3  T4
       / \                              /  \
     T2   T3                           T3   T4
-###Dodavanje elementa
-Dodavanje se zapochinje dodavanjem elementa u BSP.
+### Dodavanje elementa
+Dodavanje se započinje dodavanjem elementa u BSP.
 
-Zatim se, pochevshi od umetnutog chvora, na gore proveravaju 4 sluchaja.
+Zatim se, počevši od umetnutog čvora, na gore proveravaju 4 slučaja.
 
-###Brisanje elemnta
-Brisanje se zapochinje obicnim brisanjem elemnta iz BSP.
+### Brisanje elemnta
+Brisanje se započinje obicnim brisanjem elemnta iz BSP.
 
-Zatim se, pochevshi od umetnutog chvora, na gore proveravaju 4 sluchaja. 
+Zatim se, počevši od umetnutog čvora, na gore proveravaju 4 slučaja. 
