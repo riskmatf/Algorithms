@@ -1,4 +1,4 @@
-##CRVENO-CRNA STABLA
+## CRVENO-CRNA STABLA
 **Crveno-crna** stabla spadaju u **samobalansirajuca** binarna stabla pretrage. Međutim, ne moraju uvek biti savršeno balansirana, tj ne mora za svaki čvor važiti da je razlika visine levog i desnog podstabla najviše 1. Ove situacije su retke, razlike nisu velike te su dozvoljene zato što ne menjaju asimptosko ponašanje operacija.
 
 Ovim se smanjuje broj rotacija, te su često ova stabla brža od AVL stabala.
@@ -10,7 +10,7 @@ Operacije pretrage, dodavanja i brisanja elemnta iz crveno-crnog stabla su O(log
 
 NULL čvor koji se spominje u tekstu zapravo nije čvor već NULL pokazivač, međutim radi lakšeg razumevanja crveno-crnih stabala uzima se kao čvor.
 
-###Pravila
+### Pravila
 1. Čvor mora biti ili crven ili crn.
 2. Koren je uvek crn.
 3. Ne smeju postojati dva susedna crvena čvora.
@@ -22,13 +22,13 @@ NULL čvor koji se spominje u tekstu zapravo nije čvor već NULL pokazivač, me
 
 **Visina** stabla je uvek <= 2log<sub>2</sub>(n+1)
 
-###Ubacivanje u stablo
+### Ubacivanje u stablo
 
 Ubacivanje se vrši u dva koraka:
 
 1. Klasično ubacivanje u BSP.
 2. Prepravljanje stabla tako da zadovoljava pravila.
-####Prepravljanje
+#### Prepravljanje
 Za prepravljanje stabla koriste se **rotacija** i\ili **menjanje boja**.
 
 Šta će se koristiti zavisi od boje brata roditelja(u daljem tekstu stric) trenutno razamatranog čvora.
@@ -75,7 +75,7 @@ Ukoliko je S **crn** rade se rotacija i menjanje boje. Razlikujemo 4 slučaja:
     
     Radimo desnu rotaciju u O, zatim primenimo 3
     
-###Brisanje iz stabla
+### Brisanje iz stabla
 
 Nasuprot ubacivanju u stablo, ovde umesto boje ujaka(uncle) posmatramo boju brata(sibling) da bi utvrdili slučaj u kom se nalazimo.
 
@@ -84,7 +84,7 @@ Dok je kod ubacivanja najčešće bilo narušeno pravilo dva uzastopna crvena č
 Kako je brisanje relativno komplikovan proces, uvodimo pojam **duplo crnog** čvora.
 **Duplo crni** čvor nastaje kada brišemo crni čvor i njega menjamo drugim crnim čvorom. Tada se, da bi crna visina stabla ostala ista, čvor kojim menjamo obrisani naziva duplo crnim. Glavni zadatak nam postaje da duplo crni čvor prebacimo da postane samo crni čvor. To radimo, kao i kod ubacivanja, rotacijama i menjanjem boja.
 
-####Postupak brisanja
+#### Postupak brisanja
 
 Brisanje se odvija u dve faze:
 
@@ -94,7 +94,7 @@ Brisanje se odvija u dve faze:
 
 
 Kada vršimo obično brisanje, uvek završimo sa brisanjem čvora koji nema dece ili ima samo jedno dete. Ukoliko ima 2 deteta, menjamo sa nekim od njegovih naslednika(najmanjem u desnom podstablu ili najvećem u levom) i dalje brišemo tog naslednika.
-####Prepravljanje
+#### Prepravljanje
 Označimo čvor koji brišemo sa X, čvor kojim menjamo X sa Y i sa B brata od Y.
 Kod prepravljanja, razlikujemo dva veća slučaja.
 
