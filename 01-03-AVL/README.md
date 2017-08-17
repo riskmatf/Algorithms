@@ -1,4 +1,4 @@
-##AVL STABLA
+## AVL STABLA
 
 **AVL stablo** je **samobalansirajucje** binarno stablo pretrage.
 Pored toga shto je ono samo balansirano, takodje je i svako njegovo podstablo balansirano.
