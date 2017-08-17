@@ -1,0 +1,124 @@
+##CRVENO-CRNA STABLA
+**Crveno-crna** stabla spadaju u **samobalansirajuca** binarna stabla pretrage. Međutim, ne moraju uvek biti savršeno balansirana, tj ne mora za svaki čvor važiti da je razlika visine levog i desnog podstabla najviše 1. Ove situacije su retke, razlike nisu velike te su dozvoljene zato što ne menjaju asimptosko ponašanje operacija.
+
+Ovim se smanjuje broj rotacija, te su često ova stabla brža od AVL stabala.
+
+
+Operacije pretrage, dodavanja i brisanja elemnta iz crveno-crnog stabla su O(log(n))
+
+**NAPOMENA**
+
+NULL čvor koji se spominje u tekstu zapravo nije čvor već NULL pokazivač, međutim radi lakšeg razumevanja crveno-crnih stabala uzima se kao čvor.
+
+###Pravila
+1. Čvor mora biti ili crven ili crn.
+2. Koren je uvek crn.
+3. Ne smeju postojati dva susedna crvena čvora.
+4. Svaki put od korena do NULL čvora ima isti broj crnih čvorova.
+5. NULL čvor je crn.
+6. Novi čvor koji se ubacuje je uvek crven.
+
+**Crna visina** crveno-crnog stabla je broj crnih čvorova na putu od korena do NULL čvorova.
+
+**Visina** stabla je uvek <= 2log<sub>2</sub>(n+1)
+
+###Ubacivanje u stablo
+
+Ubacivanje se vrši u dva koraka:
+
+1. Klasično ubacivanje u BSP.
+2. Prepravljanje stabla tako da zadovoljava pravila.
+####Prepravljanje
+Za prepravljanje stabla koriste se **rotacija** i\ili **menjanje boja**.
+
+Šta će se koristiti zavisi od boje brata roditelja(u daljem tekstu stric) trenutno razamatranog čvora.
+
+Označimo sa :
+
+X-trenutni čvor
+
+O-otac od X
+
+D-otac od O
+
+S-drugi sin od D(može bit NULL)
+
+Ukoliko je S **crven** radi se menjanje boja, i to:
+
+1. Menjaju se boje O i S na crnu.
+2. Menja se boja D na crvenu.
+3. Da ovo menjanje boja ne bi prekršilo neko od pravila, stavljamo X=D i ponavljamo postupak prepravljanja.
+
+Ukoliko je S **crn** rade se rotacija i menjanje boje. Razlikujemo 4 slučaja:
+
+1. Levo levo
+
+    O je levi sin od D, X je levi sin od O
+
+    Radimo desnu u čvoru D i zatim menjamo boje D i O
+
+2. Levo desno
+
+    O je levi sin od D, X je desni sin od O.
+    
+    Radimo levu rotaciju u čvoru O, zatim primenimo 1.
+    
+3. Desno desno
+
+    O je desni sin od D, X je desni sin od O.
+    
+    Radimo levu rotaciju u čvoru D i zatim menjamo bolje D i O
+
+4. Desno levo
+
+    O je desni sin od D, X je levi sin od O.
+    
+    Radimo desnu rotaciju u O, zatim primenimo 3
+    
+###Brisanje iz stabla
+
+Nasuprot ubacivanju u stablo, ovde umesto boje ujaka(uncle) posmatramo boju brata(sibling) da bi utvrdili slučaj u kom se nalazimo.
+
+Dok je kod ubacivanja najčešće bilo narušeno pravilo dva uzastopna crvena čvora, kod brisanja je najčešće narušeno pravilo da od korena do lista mora biti isti broj crnih čvorova.
+
+Kako je brisanje relativno komplikovan proces, uvodimo pojam **duplo crnog** čvora.
+**Duplo crni** čvor nastaje kada brišemo crni čvor i njega menjamo drugim crnim čvorom. Tada se, da bi crna visina stabla ostala ista, čvor kojim menjamo obrisani naziva duplo crnim. Glavni zadatak nam postaje da duplo crni čvor prebacimo da postane samo crni čvor. To radimo, kao i kod ubacivanja, rotacijama i menjanjem boja.
+
+####Postupak brisanja
+
+Brisanje se odvija u dve faze:
+
+1. Obično brisanje iz BSP
+
+2. Prepravljanje stabla nakon brisanja
+
+
+Kada vršimo obično brisanje, uvek završimo sa brisanjem čvora koji nema dece ili ima samo jedno dete. Ukoliko ima 2 deteta, menjamo sa nekim od njegovih naslednika(najmanjem u desnom podstablu ili najvećem u levom) i dalje brišemo tog naslednika.
+####Prepravljanje
+Označimo čvor koji brišemo sa X, čvor kojim menjamo X sa Y i sa B brata od Y.
+Kod prepravljanja, razlikujemo dva veća slučaja.
+
+1.Ukoliko su ili X ili Y crveni, jednostavno brisanje čvora je dovoljno s obzirom da brišemo crveni čvor i neće biti promene u crnoj visini stabla.
+
+2.Ukoliko si i X i Y crni, tada nam se javlja **duplo crni** slučaj.
+
+1. Ukoliko je B crn i bar jedno njegovo dete je crveno, razlikujemo 4 slučaja:
+Označimo sa C crveno dete od B
+    1. Levo Levo
+    
+        Ukoliko je B levi sin svog oca i C levi sin od B ili su oba deteta od B crvena
+        
+    2. Levo Desno
+    
+        Ukoliko je B levi sin svog oca i C desni sin od B
+        
+    3. Desno Desno
+    
+        Ukoliko je B desni sin svog oca i C desni sin od B ili su oba deteta od B crvena
+        
+    4. Desno levo
+    
+        Ukoliko je B desni sin svog oca i C levi sin od B
+        
+2. Ukoliko je B crn i oba deteta su mu crna, promenimo boju od B na crvenu i krenemo isti postupak za roditelja.
+3. Ukoliko je B crven, primenimo rotaciju da ga podignemo gore, promenimo boje njemu i roditelju i ceo postupak nastavimo sa novim B. Novi B će uvek biti crn(zato što će on biti dete starog B, ako je staro B bilo crveno njegova deca ne mogu biti), pa radimo 1 i 2 za njega. Primetimo da, pošto se ovaj slučaj svodi na prethodna dva, dobra praksa je u kodu njega prvog ispitati, pa će prirodnim tokom koda on stići do ostalih slučajeva.
