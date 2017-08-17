@@ -1,14 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "avl.h"
-#define DEBUG_print 1 //you can set this to 0 if you do not want any printing on screen
+#include "../util.h"
 
-
-void print_debug(char* string, int value){
-#ifdef DEBUG_print
-	printf(string, value);
-#endif
-}
 
 Node* make_node(int value){
 	Node* new_node = malloc(sizeof(Node));
