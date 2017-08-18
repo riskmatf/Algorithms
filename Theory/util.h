@@ -28,6 +28,15 @@ typedef enum color_t
 #define MAGENTA_BG	("\x1b[45m")
 #define CYAN_BG		("\x1b[46m")
 #define WHITE_BG	("\x1b[47m")
+/*#define RGB_BG(val)\
+	({\
+		char s[50];\
+		unsigned	r = (val & 0xFF0000u) >> 16,\
+					g = (val & 0x00FF00u) >> 8,\
+					b = (val & 0x0000FFu);\
+		sprintf(s, "\x1b[48;2;%d;%d;%dm",r,g,b);\
+		s;\
+	})*/
 
 #define BLACK_FG	("\x1b[30m")
 #define RED_FG		("\x1b[31m")
@@ -37,6 +46,16 @@ typedef enum color_t
 #define MAGENTA_FG	("\x1b[35m")
 #define CYAN_FG		("\x1b[36m")
 #define WHITE_FG	("\x1b[37m")
+/*#define RGB_FG(val)\
+	({\
+		char s[51];\
+		unsigned	r = (val & 0xFF0000) >> 16,\
+					g = (val & 0x00FF00) >> 8,\
+					b = (val & 0x0000FF);\
+		sprintf(s, "\x1b[38;2;%d;%d;%dm",r,g,b);\
+		s;\
+	})*/
+#define CLEAR_ATTRIBUTE ("\x1b[0m")
 
 typedef enum attribute
 {
@@ -58,7 +77,7 @@ void move_cursor_up(unsigned val);
 void move_cursor_down(unsigned val);
 void move_cursor_left(unsigned val);
 void move_cursor_right(unsigned val);
-
+void move_cursor_to_begin_of_line(void);
 void print_debug(const char* format,...);
 
 #endif

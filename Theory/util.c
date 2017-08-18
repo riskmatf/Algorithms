@@ -32,8 +32,8 @@ void rgb_set_color_fg(unsigned rgb)
 {
 	unsigned r,g,b;
 
-	r = (rgb & 0xFF0000) >> 4;
-	g = (rgb & 0x00FF00) >> 2;
+	r = (rgb & 0xFF0000) >> 16;
+	g = (rgb & 0x00FF00) >> 8;
 	b = (rgb & 0x0000FF);
 
 	printf("\x1b[38;2;%d;%d;%dm", r,g,b);
@@ -43,8 +43,8 @@ void rgb_set_color_bg(unsigned rgb)
 {
 	unsigned r,g,b;
 
-	r = (rgb & 0xFF0000) >> 4;
-	g = (rgb & 0x00FF00) >> 2;
+	r = (rgb & 0xFF0000) >> 16;
+	g = (rgb & 0x00FF00) >> 8;
 	b = (rgb & 0x0000FF);
 
 	printf("\x1b[48;2;%d;%d;%dm", r,g,b);
@@ -55,14 +55,14 @@ void rgb_set_pair(unsigned rgb_fg, unsigned rgb_bg)
 {
 	unsigned r,g,b;
 
-	r = (rgb_fg & 0xFF0000) >> 4;
-	g = (rgb_fg & 0x00FF00) >> 2;
+	r = (rgb_fg & 0xFF0000) >> 16;
+	g = (rgb_fg & 0x00FF00) >> 8;
 	b = (rgb_fg & 0x0000FF);
 
 	printf("\x1b[38;2;%d;%d;%dm", r,g,b);
 	
-	r = (rgb_bg & 0xFF0000) >> 4;
-	g = (rgb_bg & 0x00FF00) >> 2;
+	r = (rgb_bg & 0xFF0000) >> 16;
+	g = (rgb_bg & 0x00FF00) >> 8;
 	b = (rgb_bg & 0x0000FF);
 
 	printf("\x1b[48;2;%d;%d;%dm", r,g,b);
@@ -70,12 +70,12 @@ void rgb_set_pair(unsigned rgb_fg, unsigned rgb_bg)
 
 void clear_screen(void)
 {
-	puts("\x1b[2J");
+	printf("\x1b[2J");
 }
 
 void clear_line(void)
 {
-	puts("\x1b[K");
+	printf("\x1b[K");
 }
 
 void set_attribute(attribute_t a)
@@ -85,7 +85,7 @@ void set_attribute(attribute_t a)
 
 void clear_attribute(void)
 {
-	puts("\x1b[0m");
+	printf("\x1b[0m");
 }
 
 void move_cursor(unsigned x, unsigned y)
@@ -111,4 +111,9 @@ void move_cursor_left(unsigned val)
 void move_cursor_right(unsigned val)
 {
 	printf("\x1b[%dC", val);
+}
+
+void move_cursor_to_begin_of_line(void)
+{
+	putchar('\r');
 }
