@@ -62,6 +62,10 @@ typedef enum attribute
 	NONE = 0, BOLD = 1, UNDERLINE = 4
 }attribute_t;
 
+#ifdef _cplusplus
+extern "C"
+{
+#endif
 void set_color_fg(color_t c);
 void set_color_bg(color_t c);
 void set_color_pair(color_t fg, color_t bg);
@@ -79,5 +83,7 @@ void move_cursor_left(unsigned val);
 void move_cursor_right(unsigned val);
 void move_cursor_to_begin_of_line(void);
 void print_debug(const char* format,...);
-
+#ifdef _cplusplus
+}
+#endif
 #endif
