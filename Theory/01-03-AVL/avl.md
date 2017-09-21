@@ -15,7 +15,7 @@ Pored toga što je ono samo balansirano, takođe je i svako njegovo podstablo ba
 Gde su T1, T2, T3 podstabla
 
 **Kritičan čvor** je prvi čvor, počevši od dole, kod koga je razlika između
-visine levog i desnog podstabla veća od 2.
+visine levog i desnog podstabla veća od 1.
 
 Razdvajamo 4 kritične situacije:
 
