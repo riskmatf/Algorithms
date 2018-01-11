@@ -40,17 +40,43 @@ void delete(Node** root, int value){
 	else if(value < (*root)->val)
 		delete(&(*root)->left, value);
 	else{//found node that has to be deleted
-		if((*root)->left == NULL || (*root)->right == NULL){//node has 0 or 1 child
-			Node* tmp = ((*root)->left == NULL) ? (*root)->right : (*root)->left;
-			free(*root);
-			*root = tmp;
-		}
-		else{//node has 2 children
-			Node* tmp = find_max((*root)->left);
-			(*root)->val = tmp->val;
-			delete(&(*root)->left, tmp->val);
-		}
+        /*
+        This looks better and is easier to type, but may be unreadable or a bit confusing for
+        new coders. It does the exact same thing as the if underneath it.
+
+        if((*root)->left == NULL || (*root)->right == NULL){//node has 0 or 1 child
+                Node* tmp = ((*root)->left == NULL) ? (*root)->right : (*root)->left;
+                free(*root);
+                *root = tmp;
+        }
+        */
+        if((*root)->left == NULL || (*root)->right == NULL){//case where node has 0 or 1 child
+                Node* tmp;
+                if((*root)->left == NULL){
+                        // Root doesn't have a left child, so we are going right.
+                        // NOTE:        we might not have a right child either,
+                        //                      but that is not a problem since we are only asigning it and not dereferencing it.
+                        tmp=(*root)->right;
+                }
+                else{
+                        // Root doesn't have a right child, so we are going right.
+                        // Same NOTE as above.
+                        tmp=(*root)->left;
+                }
+
+                /* Remove the node we wanted */
+                free(*root);
+
+                /* Make root one of it's children */
+                *root=tmp;
+        }
+        else{//node has 2 children
+                Node* tmp = find_max((*root)->left);
+                (*root)->val = tmp->val;
+                delete(&(*root)->left, tmp->val);
+        }
 	}
+
 }
 void inorder(Node* root){
 	if(root == NULL)
